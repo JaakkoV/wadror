@@ -65,6 +65,8 @@ class BreweriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
 
+  REALM = "Secret"
+
   def authenticate
     admin_accounts = {
         "admin" => "secret",
