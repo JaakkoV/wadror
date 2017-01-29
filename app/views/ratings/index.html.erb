@@ -4,5 +4,6 @@
   <% @ratings.each do |rating| %>
       <li> <%= rating.to_s %> </li>
   <% end %>
-
 </ul>
+
+<%= link_to 'new rating', ratings_new_path %>
