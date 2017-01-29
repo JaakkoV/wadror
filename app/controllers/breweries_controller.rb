@@ -1,5 +1,6 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate, only: [:destroy]
 
   # GET /breweries
   # GET /breweries.json
@@ -63,7 +64,22 @@ class BreweriesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_brewery
+
+  def authenticate
+    admin_accounts = {
+        "admin" => "secret",
+        "pekka" => Digest::MD5.hexdigest(["pekka", REALM, "beer"].join(":")),
+        "arto" => "foobar",
+        "matti" => "ittam"
+    }
+
+
+    authenticate_or_request_with_http_digest(REALM) do |username|
+      admin_accounts[username]
+    end
+  end
+
+  def set_brewery
       @brewery = Brewery.find(params[:id])
     end
 

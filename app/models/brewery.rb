@@ -1,5 +1,8 @@
 class Brewery < ApplicationRecord
-  has_many :beers
+  has_many :beers, dependent: :destroy
+  has_many :ratings, through: :beers
+
+  include AverageRating
 
   def print_report
     puts self.name
