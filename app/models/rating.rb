@@ -5,5 +5,4 @@ class Rating < ApplicationRecord
     "#{self.beer.name} #{self.score}"
   end
 
-
 end
