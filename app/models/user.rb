@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include RatingAverage
+  include AverageRating
 
   validates :username, uniqueness: true
 
