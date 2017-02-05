@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # WADROR
+gem 'bcrypt', '~> 3.1.7'
 group :development, :test do
   gem 'sqlite3'
 end

@@ -2,7 +2,8 @@ class Brewery < ApplicationRecord
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
 
-  include AverageRating
+  validates :name, presence: true
+  validates :year, numericality: { less_than_or_equal_to: Proc.new { Time.now.year }}, numericality: { greater_than_or_equal_to: 1042}
 
   def print_report
     puts self.name
