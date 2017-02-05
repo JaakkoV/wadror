@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 
+gem 'bcrypt', '~> 3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
 # Use sqlite3 as the database for Active Record
@@ -16,7 +17,6 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 # WADROR
-gem 'bcrypt', '~> 3.1.7'
 group :development, :test do
   gem 'sqlite3'
 end
