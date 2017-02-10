@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
               message: "should contain one number and one capital letter" }
 
   def favorite_beer
-    return nil if ratings.empty?   # palautetaan nil jos reittauksia ei ole
-    ratings.sort_by(&:score).last.beer
+    return nil if ratings.empty?
+    ratings.order(score: :desc).limit(1).first.beer
   end
 end
