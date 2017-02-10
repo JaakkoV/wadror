@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.7'
 # Use sqlite3 as the database for Active Record
 group :development, :test do
   gem 'sqlite3'
@@ -40,6 +40,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails', '~> 3.5'
   gem 'byebug'
   gem 'pry-rails'
 end
