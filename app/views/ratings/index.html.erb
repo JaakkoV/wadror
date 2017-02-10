@@ -1,7 +1,7 @@
 <h2>List of ratings</h2>
 
 <ul>
-  <% if @ratings.user.not.nil? %>
+  <% if @ratings.not.nil? %>
     <% @ratings.each do |rating| %>
       <li> <%= rating %> <%= link_to rating.user.username, rating. user %> </li>
     <% end %>
