@@ -27,4 +27,38 @@ describe "Rating" do
     expect(beer1.ratings.count).to eq(1)
     expect(beer1.average_rating).to eq(15.0)
   end
+
+  describe "create ratings" do
+    before :each do
+      FactoryGirl.create :rating, user: user, beer: beer1, score:1
+      FactoryGirl.create :rating, user: user, beer: beer2, score:2
+      FactoryGirl.create :rating, user: user, beer: beer2, score:22
+    end
+
+    it "match given ratings count" do
+      visit ratings_path
+      expect(page).to have_content "Number of ratings 3"
+      expect(page).to have_content "iso 3 1"
+      expect(page).to have_content "Karhu 2"
+      expect(page).to have_content "Karhu 22"
+    end
+
+    it "show all on rater's page" do
+      reitteri = FactoryGirl.create :user, username: "reitteri"
+      FactoryGirl.create :rating, user: reitteri, beer: beer1, score:11
+
+      visit user_path(user)
+      expect(page).to have_content "iso 3 1"
+      expect(page).to have_content "Karhu 2"
+      expect(page).to have_content "Karhu 22"
+      expect(page).not_to have_content "iso 3 11"
+    end
+
+    it "if rater deletes it's rating, it's deleted from the db" do
+      visit user_path(user)
+      expect{
+        page.all('a', text:'delete')[1].click
+      }.to change{Rating.count}.by(-1)
+    end
+  end
 end
