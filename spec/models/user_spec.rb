@@ -81,4 +81,5 @@ RSpec.describe User, type: :model do
       create_beer_with_rating(user, score)
     end
   end
+
 end
