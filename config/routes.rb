@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   get 'signup', to: 'users#new'
   get 'signin', to: 'sessions#new'
+  get 'places', to: 'places#index'
+  post 'places', to:'places#search'
+
   delete 'signout', to: 'sessions#destroy'  
   root 'breweries#index'
 end
