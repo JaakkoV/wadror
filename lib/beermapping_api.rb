@@ -12,5 +12,4 @@ class BeermappingApi
       Place.new(place)
     end
   end
-
 end
