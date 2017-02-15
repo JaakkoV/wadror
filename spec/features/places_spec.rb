@@ -26,5 +26,11 @@ describe "Places" do
     expect(page).to have_content "satansBeerHouse"
   end
 
-  it
+  it "tests that text 'No locations in etsitty paikka' is shown if API finds nothing" do
+    allow(BeermappingApi).to receive(:places_in).with("emptyness").and_return([])
+    visit places_path
+    fill_in('city', with: "emptyness")
+    click_button "Search"
+    expect(page).to have_content 'No locations in emptyness'
+  end
 end
