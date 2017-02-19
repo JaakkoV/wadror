@@ -280,16 +280,16 @@
       "/home/jaakvirt/ratebeer/lib/beermapping_api.rb": [
         1,
         1,
-        0,
+        3,
         null,
-        0,
-        0,
+        3,
+        3,
         null,
-        0,
+        3,
         null,
-        0,
-        0,
-        0,
+        2,
+        2,
+        22,
         null,
         null,
         null
@@ -654,6 +654,6 @@
         0
       ]
     },
-    "timestamp": 1487147953
+    "timestamp": 1487514442
   }
 }

@@ -51,7 +51,7 @@ group :test do
   gem 'launchy'
   gem 'rspec-its'
   gem 'simplecov', require: false
-
+  gem 'webmock'
 end
 
 group :development do
