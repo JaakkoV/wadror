@@ -10,6 +10,14 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
   def show
+    if current_user
+      if @beer_club.members.where(id:current_user).empty?
+        @membership = Membership.new
+        @membership.beer_club = @beer_club
+      else
+        @membership = @beer_club.memberships.where(user:current_user).first
+      end
+    end
   end
 
   # GET /beer_clubs/new

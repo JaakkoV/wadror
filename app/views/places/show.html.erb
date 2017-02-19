@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+    <h1><%= @place.name %></h1>
+    <p>
+      <%= @place.send(:street) %><br>
+      <%= @place.send(:zip) %>
+      <%= @place.send(:city) %>
+    </p>

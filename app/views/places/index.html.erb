@@ -14,9 +14,14 @@
       </thead>
       <% @places.each do |place| %>
           <tr>
-            <% Place.rendered_fields.each do |f| %>
-                <td><%= place.send(f) %></td>
-            <% end %>
+            <td><%= place.send(:id) %></td>
+            <td><%= link_to(place.send(:name), place_path(place.send(:id))) %></td>
+            <td><%= place.send(:status) %></td>
+            <td><%= place.send(:street) %></td>
+            <td><%= place.send(:city) %></td>
+            <td><%= place.send(:zip) %></td>
+            <td><%= place.send(:country) %></td>
+            <td><%= place.send(:overall) %></td>
           </tr>
       <% end %>
     </table>
