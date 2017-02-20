@@ -1,28 +1,17 @@
 class BeermappingApi
   def self.places_in(city)
     city = city.downcase
-    Rails.cache.fetch(city, :expires_in => 1.minute, race_condition_ttl:10) { fetch_places_in(city) }
+    Rails.cache.fetch(city, expires_in: 1.week) { fetch_places_in(city) }
   end
 
-  def self.place_in(place_id)
-    place = place_id
-    Rails.cache.fetch(place, :expires_in => 1.minute, race_condition_ttl:10) { fetch_place(place) }
+  def self.place_in(city, id)
+    places_in(city).find{ |p| p.id == id }
   end
-
 
   private
 
-  def self.fetch_place(city_id)
-    url = "http://stark-oasis-9187.herokuapp.com/api/"
-
-    response = HTTParty.get "#{url}#{ERB::Util.url_encode(city_id)}"
-    place = response.parsed_response["bmp_locations"]["location"]
-
-    Place.new(place)
-  end
-
   def self.fetch_places_in(city)
-    url = "http://stark-oasis-9187.herokuapp.com/api/"
+    url = "http://beermapping.com/webservice/loccity/#{key}/"
 
     response = HTTParty.get "#{url}#{ERB::Util.url_encode(city)}"
     places = response.parsed_response["bmp_locations"]["location"]
@@ -33,5 +22,10 @@ class BeermappingApi
     places.map do | place |
       Place.new(place)
     end
+  end
+
+  def self.key
+    raise "APIKEY env variable not defined" if ENV['APIKEY'].nil?
+    ENV['APIKEY']
   end
 end

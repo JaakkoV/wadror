@@ -1,23 +1,21 @@
 require 'rails_helper'
+
 include Helpers
 
 describe "Rating" do
-  let!(:brewery) { FactoryGirl.create :brewery, name:"Koff" }
-  let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
-  let!(:beer2) { FactoryGirl.create :beer, name:"Karhu", brewery:brewery }
+  let!(:brewery) { FactoryGirl.create :brewery, name: "Koff" }
+  let!(:beer1) { FactoryGirl.create :beer, name: "iso 3", brewery: brewery }
+  let!(:beer2) { FactoryGirl.create :beer, name: "Karhu", brewery: brewery }
   let!(:user) { FactoryGirl.create :user }
 
   before :each do
-    visit signin_path
-    fill_in('username', with:'Pekka')
-    fill_in('password', with:'Foobar1')
-    click_button('Log in')
+    sign_in(username:"Pekka", password:"Foobar1")
   end
 
   it "when given, is registered to the beer and user who is signed in" do
     visit new_rating_path
-    select('iso 3', from:'rating[beer_id]')
-    fill_in('rating[score]', with:'15')
+    select('iso 3', from: 'rating[beer_id]')
+    fill_in('rating[score]', with: '15')
 
     expect{
       click_button "Create Rating"
@@ -28,37 +26,20 @@ describe "Rating" do
     expect(beer1.average_rating).to eq(15.0)
   end
 
-  describe "create ratings" do
+  describe "when several exist" do
     before :each do
-      FactoryGirl.create :rating, user: user, beer: beer1, score:1
-      FactoryGirl.create :rating, user: user, beer: beer2, score:2
-      FactoryGirl.create :rating, user: user, beer: beer2, score:22
-    end
-
-    it "match given ratings count" do
+      create_beers_with_ratings(FactoryGirl.create(:brewery), FactoryGirl.create(:style), user, 10, 7, 9)
       visit ratings_path
-      expect(page).to have_content "Number of ratings 3"
-      expect(page).to have_content "iso 3 1"
-      expect(page).to have_content "Karhu 2"
-      expect(page).to have_content "Karhu 22"
     end
 
-    it "show all on rater's page" do
-      reitteri = FactoryGirl.create :user, username: "reitteri"
-      FactoryGirl.create :rating, user: reitteri, beer: beer1, score:11
-
-      visit user_path(user)
-      expect(page).to have_content "iso 3 1"
-      expect(page).to have_content "Karhu 2"
-      expect(page).to have_content "Karhu 22"
-      expect(page).not_to have_content "iso 3 11"
+    it "all are shown at ratings page" do
+      expect(page).to have_content "anonymous 10 #{user.username}"
+      expect(page).to have_content "anonymous 7 #{user.username}"
+      expect(page).to have_content "anonymous 9 #{user.username}"
     end
 
-    it "if rater deletes it's rating, it's deleted from the db" do
-      visit user_path(user)
-      expect{
-        page.all('a', text:'delete')[1].click
-      }.to change{Rating.count}.by(-1)
+    it "their count is shown ratings page" do
+      expect(page).to have_content "Total of #{Rating.count} ratings given"
     end
   end
 end

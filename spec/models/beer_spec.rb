@@ -1,18 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Beer, type: :model do
-  it "saves beer with a name and style to the database" do
-    beer = Beer.create name: "testiOlut", style: "testiStyle"
+  it "is saved with proper name name and style set" do
+    beer = Beer.create name: "Urbock", style: FactoryGirl.create(:style)
+
     expect(beer).to be_valid
+    expect(Beer.count).to eq(1)
   end
 
-  it "does not save beer without a name to the database" do
-    beer = Beer.create style: "testiStyle"
+  it "is not saved without name" do
+    beer = Beer.create style: FactoryGirl.create(:style)
+
     expect(beer).not_to be_valid
+    expect(Beer.count).to eq(0)
   end
 
-  it "does not save beer without a style to the database" do
-    beer = Beer.create name: "testiOlut"
+  it "is not saved without style" do
+    beer = Beer.create name: "Urbock"
+
     expect(beer).not_to be_valid
-  end
+    expect(Beer.count).to eq(0)
+  end     
+ 
 end

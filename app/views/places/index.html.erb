@@ -1,28 +1,25 @@
 <p id="notice"><%= notice %></p>
 
 <%= form_tag places_path do %>
-    city <%= text_field_tag :city, params[:city] %>
-    <%= submit_tag "Search" %>
+  city <%= text_field_tag :city, params[:city] %>
+  <%= submit_tag "Search" %>
 <% end %>
 
 <% if @places %>
-    <table>
-      <thead>
+  <table>
+    <thead>
+      <td>name</td>
       <% Place.rendered_fields.each do |f| %>
-          <td><%=f %></td>
+        <td><%=f %></td>
       <% end %>
-      </thead>
-      <% @places.each do |place| %>
-          <tr>
-            <td><%= place.send(:id) %></td>
-            <td><%= link_to(place.send(:name), place_path(place.send(:id))) %></td>
-            <td><%= place.send(:status) %></td>
-            <td><%= place.send(:street) %></td>
-            <td><%= place.send(:city) %></td>
-            <td><%= place.send(:zip) %></td>
-            <td><%= place.send(:country) %></td>
-            <td><%= place.send(:overall) %></td>
-          </tr>
-      <% end %>
-    </table>
+    </thead>
+    <% @places.each do |place| %>
+      <tr>
+        <td><%= link_to place.name, place_path(place.id) %></td>
+        <% Place.rendered_fields.each do |f| %>
+          <td><%= place.send(f) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
