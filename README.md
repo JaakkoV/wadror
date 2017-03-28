@@ -1,3 +1,5 @@
+app: https://beersrevs.herokuapp.com/
+
 Web-palvelinohjelmointi kevät 2017, Tietojenkäsittelytieteen laitos, Helsingin Yliopisto
 
 [https://github.com/mluukkai/WebPalvelinohjelmointi2017/wiki](https://github.com/mluukkai/WebPalvelinohjelmointi2017/wiki)
